@@ -52,8 +52,9 @@ Required Templates can be found in ./Templates folder
 
 You might need to optimize consumption with inclusive or exclusive rules using xpath queries. This also helps if theres data that requires not to be inserterd due to compliance scenarios.
 
-    ```
+```
     Application!*[System[(Level=1 or Level=2 or Level=3 or Level=4 or Level=5)]]
-    ```
+
+```
 # References
 - [Install the Azure Monitor agent (preview)](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/azure-monitor-agent-install?context=%2Fazure%2Fvirtual-machines%2Fcontext%2Fcontext&tabs=ARMAgentPowerShell%2CPowerShellWindows%2CPowerShellWindowsArc%2CCLIWindows%2CCLIWindowsArc)
