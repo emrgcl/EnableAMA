@@ -4,6 +4,6 @@
     ResourceGroupName = 'ContosoAll'
     Location = 'EastUs'
     SubscriptionID = 'c02646f3-6401-40c7-8543-69333821da9a'
-    DCRName = 'Default Collection'
+    DCRName = 'Default-Collection'
     WorkspaceName = 'Spark21ws1'
 }
