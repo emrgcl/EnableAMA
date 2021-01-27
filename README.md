@@ -16,7 +16,9 @@ Installing the agent is as easy as deploying an extension to an AzureVM or Azure
 Data collection rules can be created via Json template or again through portal expereince. 
 
 
-# Environment
+# Requirements
+- Two hyperv guests with Azure arc for servers enabled and connected
+- Two Azure Virtual Machines with system-assigned managed identity
 - Az.Powershlell 5.4.0 (Requirement for DCR Cmdlets)
 - Az.ConnectedMachine 0.2.0
 - Powershell 7.0.4 (Version 7 for best practice)
