@@ -1,0 +1,134 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "dataCollectionRules": {
+            "defaultValue": "Enter the DCR Name",
+            "type": "String"
+        },
+        "workspaceName": {
+            "defaultValue": "Enter the workspace name",
+            "type": "String"
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "Optional. Location for all resources."
+            }
+        },
+        "associationName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the association."
+            },
+            "defaultValue": "[concat(parameters('dataCollectionRules'),'_Association')]"
+        },
+        "vmAssociationList": {
+            "type": "string",
+            "minLength": 1,
+            "metadata": {
+                "description": "List of virtual machines to be associated. If using multiple VMs, make their names comma separate. E.g. VM01, VM02, VM03."
+            },
+            "defaultValue": "VM03, VM04"
+        }
+    },
+    "variables": {
+        "workspace_ResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces/', tolower(parameters('workspaceName')))]",
+        "vmListArray": "[split(parameters('vmAssociationList'),',')]"
+		},
+    "resources": [
+        {
+            "type": "Microsoft.Insights/dataCollectionRules",
+            "apiVersion": "2019-11-01-preview",
+            "name": "[parameters('dataCollectionRules')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "dataSources": {
+                    "performanceCounters": [
+                        {
+                            "streams": [
+                                "Microsoft-Perf",
+                                "Microsoft-InsightsMetrics"
+                            ],
+                            "scheduledTransferPeriod": "PT1M",
+                            "samplingFrequencyInSeconds": 30,
+                            "counterSpecifiers": [
+                                "\\System\\Processes",
+                                "\\System\\System Up Time",
+                                "\\System\\Processor Queue Length",
+                                "\\Memory\\Available Bytes",
+                                "\\Memory\\Pool Paged Bytes",
+                                "\\Memory\\Pool Nonpaged Bytes",
+                                "\\Network Interface(*)\\Bytes Total/sec",
+                                "\\Network Interface(*)\\Bytes Sent/sec",
+                                "\\Network Interface(*)\\Bytes Received/sec",
+                                "\\Network Interface(*)\\Packets/sec",
+                                "\\Network Interface(*)\\Packets Sent/sec",
+                                "\\Network Interface(*)\\Packets Received/sec",
+                                "\\Network Interface(*)\\Packets Outbound Errors",
+                                "\\Network Interface(*)\\Packets Received Errors",
+                                "\\Processor(*)\\% Processor Time",
+                                "\\Processor(*)\\% User Time",
+                                "\\Process(*)\\% Processor Time",
+                                "\\Process(*)\\Working Set - Private",
+                                "\\LogicalDisk(*)\\% Free Space",
+                                "\\LogicalDisk(*)\\Avg. Disk sec/Read",
+                                "\\LogicalDisk(*)\\Avg. Disk sec/Write",
+                                "\\LogicalDisk(*)\\Disk Read Bytes/sec",
+                                "\\LogicalDisk(*)\\Disk Write Bytes/sec",
+                                "\\LogicalDisk(*)\\Free Megabytes"
+                            ],
+                            "name": "perfCounterDataSource_VitalSigns"
+                        }
+                    ]
+                },
+                "destinations": {
+                    "logAnalytics": [
+                        {
+                            "workspaceResourceId": "[variables('workspace_ResourceId')]",
+                            "name": "[parameters('workspaceName')]"
+                        }
+                    ],
+                    "azureMonitorMetrics": {
+                        "name": "azureMonitorMetrics-default"
+                    }
+                },
+                "dataFlows": [
+                    {
+                        "streams": [
+                            "Microsoft-InsightsMetrics"
+                        ],
+                        "destinations": [
+                            "azureMonitorMetrics-default"
+                        ]
+                    },
+                    {
+                        "streams": [
+                            "Microsoft-Perf"
+                        ],
+                        "destinations": [
+                            "[parameters('workspaceName')]"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "dependsOn": [
+                "[concat(resourceId('Microsoft.Insights/dataCollectionRules/', parameters('dataCollectionRules')))]"
+            ],
+            "type": "Microsoft.HybridCompute/Machines/providers/dataCollectionRuleAssociations",
+            "name": "[concat(concat(trim(variables('vmListArray')[copyIndex()]),'/microsoft.insights/', parameters('associationName')))]",
+            "apiVersion": "2019-11-01-preview",
+            "properties": {
+                "description": "Association of data collection rule. Deleting this association will break the data collection for this virtual machine.",
+                "dataCollectionRuleId": "[concat(resourceId('Microsoft.Insights/dataCollectionRules/', parameters('dataCollectionRules')))]"
+            },
+            "copy": {
+                "name": "associationcopy",
+                "count": "[length(variables('vmListArray'))]"
+            }
+        }
+    ]
+}

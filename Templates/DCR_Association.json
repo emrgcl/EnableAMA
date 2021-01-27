@@ -1,0 +1,44 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "dataCollectionRuleName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the data collection rule."
+            }
+        },
+        "associationName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the association."
+            }
+        },
+        "vmAssociationList": {
+            "type": "string",
+            "minLength": 1,
+            "metadata": {
+                "description": "List of virtual machines to be associated. If using multiple VMs, make their names comma separate. E.g. VM01, VM02, VM03."
+            }
+        }
+    },
+    "variables": {
+        "vmListArray": "[split(parameters('vmAssociationList'),',')]",
+        "dataCollectionRuleId": "[concat(resourceId('Microsoft.Insights/dataCollectionRules/', parameters('dataCollectionRuleName')))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.HybridCompute/Machines/providers/dataCollectionRuleAssociations",
+            "name": "[concat(concat(trim(variables('vmListArray')[copyIndex()]),'/microsoft.insights/', parameters('associationName')))]",
+            "apiVersion": "2019-11-01-preview",
+            "properties": {
+                "description": "Association of data collection rule. Deleting this association will break the data collection for this virtual machine.",
+                "dataCollectionRuleId": "[variables('dataCollectionRuleId')]"
+            },
+            "copy": {
+                "name": "associationcopy",
+                "count": "[length(variables('vmListArray'))]"
+            }
+        }
+    ]
+}

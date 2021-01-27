@@ -1,0 +1,67 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "dataCollectionRules": {
+            "defaultValue": "Enter the DCR Name",
+            "type": "String"
+        },
+        "workspaceName": {
+            "defaultValue": "Enter the workspace name",
+            "type": "String"
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "Optional. Location for all resources."
+            }
+        }
+    },
+    "variables": {
+        "workspace_ResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces/', tolower(parameters('workspaceName')))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Insights/dataCollectionRules",
+            "apiVersion": "2019-11-01-preview",
+            "name": "[parameters('dataCollectionRules')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "dataSources": {
+                    "windowsEventLogs": [
+                        {
+                            "streams": [
+                                "Microsoft-Event"
+                            ],
+                            "scheduledTransferPeriod": "PT5M",
+                            "xPathQueries": [
+                                "Application!*[System[(Level=1 or Level=2 or Level=3 or Level=4 or Level=5)]]",
+                                "System!*[System[(Level=1 or Level=2 or Level=3 or Level=4 or Level=5)]]"
+                            ],
+                            "name": "eventLogsDataSource_BasicOsLogs"
+                        }
+                    ]
+                },
+                "destinations": {
+                    "logAnalytics": [
+                        {
+                            "workspaceResourceId": "[variables('workspace_ResourceId')]",
+                            "name": "[parameters('workspaceName')]"
+                        }
+                    ]
+                },
+                "dataFlows": [
+                    {
+                        "streams": [
+                            "Microsoft-Event"
+                        ],
+                        "destinations": [
+                            "[parameters('workspaceName')]"
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}

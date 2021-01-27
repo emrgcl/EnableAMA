@@ -1,7 +1,6 @@
 # Enable Hybrid Cloud monitoring with the new Azure Monitoring Agent (AMA)
 
 # Scenario
-
 Contoso has an application which has 4 web servers. 2 of them are azure VMS and 2 of them are On-Premises web Servers with Azure arc enabled.
 
 There is a set of perforamance data to be collected for all servers and for only Azure Arc Enabled servers those are on premises Application and System event logs.
@@ -9,7 +8,6 @@ There is a set of perforamance data to be collected for all servers and for only
 Two Data collection rules needed one per all servers without Secuity eventd and one with the Secuity events assoicated with the VMs.
 
 # Overview
-
 Data Collection Rules can be assoicated with Azure VMs or Arc Enabled Servers. Creating data collection rule and assoicating the resources are two seperate proceses but the portal experience combines these two operations.
 
 Installing the agent is as easy as deploying an extension to an AzureVM or Azure Arc Enabled Server but this is not necesssary because the associated resoruces will pull and install the extension automatically once assoication is added on the data collection rule.
@@ -44,7 +42,18 @@ PowerShell Cmdlets for each step below can be found in ***.\Demo-1.ps1***
 1. Add ArcEnabledServer2 assocations using Powershell
     > **Note:** Now we have all 4 servers associated with the 'Default Collection Rule'
 
-# Demo 2 - Create SecurityEvent Collection rule using Json template and asscoicate Azure VMs only
+# Demo 2 - Create and Associate using ARM
+Required Templates can be found in ./Templates folder
 
+1. Create DCR using the templates. 
+1. Assign VM using templates
+
+# Demo 3 - Create a DCR to collect Windows Events using XPATH and associate it to one of the VMs previously onboarded.
+
+You might need to optimize consumption with inclusive or exclusive rules using xpath queries. This also helps if theres data that requires not to be inserterd due to compliance scenarios.
+
+    ```
+    Application!*[System[(Level=1 or Level=2 or Level=3 or Level=4 or Level=5)]]
+    ```
 # References
 - [Install the Azure Monitor agent (preview)](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/azure-monitor-agent-install?context=%2Fazure%2Fvirtual-machines%2Fcontext%2Fcontext&tabs=ARMAgentPowerShell%2CPowerShellWindows%2CPowerShellWindowsArc%2CCLIWindows%2CCLIWindowsArc)
