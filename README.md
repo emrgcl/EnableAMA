@@ -3,7 +3,8 @@
 # Scenario
 
 Contoso has an application which has 4 web servers. 2 of them are azure VMS and 2 of them are On-Premises web Servers with Azure arc enabled.
-There is a set of data to be collected for all servers but the arc enabled servers should not send Security events to azure due to contoso's regulatory compliancy issues. 
+
+There is a set of perforamance data to be collected for all servers and for only Azure Arc Enabled servers those are on premises Application and System event logs.
 
 Two Data collection rules needed one per all servers without Secuity eventd and one with the Secuity events assoicated with the VMs.
 
