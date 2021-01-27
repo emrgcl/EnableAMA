@@ -8,7 +8,8 @@ Install through Portal
  - Please note that Extension is not installed through the Extension blade in the VM properties, the extension is installed once the data collection is assoicated in with the VM in Data Collection Rules under Monitor.
 # Environment
 - Az.Powershlell 5.4.0 (Requirement for DCR Cmdlets)
-- Powershlel 7.0.4 (Version 7 for best practice)
+- Az.ConnectedMachine 0.2.0
+- Powershell 7.0.4 (Version 7 for best practice)
 - VSCode Insiders
 
 # Demo 1 - Install the arc agent on the portal
