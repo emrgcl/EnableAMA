@@ -11,13 +11,12 @@ $DCRName = 'CollectTest'
 # Get Data Collection Rule Objects
 $DCR = Get-AzDataCollectionRule -RuleName $DCRName -ResourceGroupName 'ContosoEu'
 
-# Remove Associations
-$DCR | Remove-AzDataCollectionRuleAssociation
+# Remove Associations, Unfortunately pipeline isnt working properly with Inputobject
+$DCRAssociations = $DCR | Get-AzDataCollectionRuleAssociation
+$DCRAssociations.Id | ForEach-Object {Remove-AzDataCollectionRuleAssociation -AssociationId $_}
 
 # Remove DCR
 $DCR | Remove-AzDataCollectionRule
-
-
 
 # Uninstall Extensions for Arc Servers
 $ArcEnabledServerObjects = $ArcEnabledServers | ForEach-Object {Get-AzConnectedMachine -ResourceGroupName $ResourceGroupName -Name $_} 

@@ -2,11 +2,11 @@
 #Requires -Modules @{ModuleName='Az';ModuleVersion='5.4.0'},@{ModuleName='Az.ConnectedMachine';ModuleVersion='0.2.0'}
 
 $VMs = 'emreg-web01','emreg-web02'
-$ArcEnabledServers = @('web03')
+$ArcEnabledServers = @('web03','web04')
 $ResourceGroupName = 'ContosoAll'
 $SubscriptionID = 'c02646f3-6401-40c7-8543-69333821da9a'
 
-
+# Add  Vms[0]
 
 # Get Extension List for the VMs
 $VMs | ForEach-Object {Get-AzVMExtension -VMName $_ -ResourceGroupName $ResourceGroupName | Select-Object -Property VMName,Name,ProvisioningState,Statuses}
