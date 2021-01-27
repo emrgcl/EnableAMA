@@ -27,6 +27,9 @@ Data collection rules can be created via Json template or again through portal e
 
 # Demo 1 - Create Data Collection On the Portal and use various assoication options.
 
+Powershlel Cmdlets for each step below can be found in ***.\Demo-1.ps1***
+
+
 1. Create a Data Collection Rule Named 'Default Collection' with Perf Counters and Application and System Events except Security events and assoicate with *VM1*
 1. Check if the extension is installed automatically using PowerShell
 1. Now add Azure *ArcEnabledServer1* to the assoication
