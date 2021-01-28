@@ -1,11 +1,14 @@
 #Requires -Version 7.0
 #Requires -Modules @{ModuleName='Az';ModuleVersion='5.4.0'},@{ModuleName='Az.ConnectedMachine';ModuleVersion='0.2.0'}
 
-$VMs = 'emreg-web01','emreg-web02'
-$ArcEnabledServers = @('web03')
-$ResourceGroupName = 'ContosoAll'
-$SubscriptionID = 'c02646f3-6401-40c7-8543-69333821da9a'
-$DCRName = 'CollectTest'
+$ParametersFile = './Parameters.psd1'
+$Parameters=Import-PowerShellDataFile -Path $ParametersFile
+$VMs = $Parameters.VMs
+$ArcEnabledServers = $Parameters.ArcEnabledServers
+$ResourceGroupName = $Parameters.ResourceGroupName
+$SubscriptionID = $Parameters.SubscriptionID
+$DCRName = $Parameters.DCRName
+$Location = $Parameters.Location
 
 
 # Get Data Collection Rule Objects
@@ -19,7 +22,9 @@ $DCRAssociations.Id | ForEach-Object {Remove-AzDataCollectionRuleAssociation -As
 $DCR | Remove-AzDataCollectionRule
 
 # Uninstall Extensions for Arc Servers
-$ArcEnabledServerObjects = $ArcEnabledServers | ForEach-Object {Get-AzConnectedMachine -ResourceGroupName $ResourceGroupName -Name $_} 
-$ArcEnabledServerObjects | Remove-AzConnectedMachineExtension
+$ArcEnabledServerExtensions = $ArcEnabledServers | ForEach-Object {Get-AzConnectedMachineExtension -MachineName $_ -ResourceGroupName  $ResourceGroupName -Name AzureMonitorWindowsAgent } 
+$ArcEnabledServerExtensions  | Remove-AzConnectedMachineExtension
 
 # Uninstall Extensions for VMs
+$VMExtensions = $VMs | ForEach-Object {Get-AzVMExtension -VMName $_ -ResourceGroupName $ResourceGroupName}
+$VMExtensions | remove-azvmExtension

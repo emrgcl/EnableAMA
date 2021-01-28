@@ -53,7 +53,7 @@ Required Templates can be found in ./Templates folder
 You might need to optimize consumption with inclusive or exclusive rules using xpath queries. This also helps if theres data that requires not to be inserterd due to compliance scenarios.
 
 ```
-    Application!*[System[(Level=1 or Level=2 or Level=3 or Level=4 or Level=5)]]
+ Application!*[System[(Level=1 or Level=2 or Level=3 or Level=4 or Level=5)]]
 
 ```
 # References
