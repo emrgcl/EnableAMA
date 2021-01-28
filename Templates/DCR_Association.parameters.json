@@ -3,13 +3,13 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "dataCollectionRuleName": {
-      "value": "DCR_CommonWindowsLogs"
+      "value": "DCR_CommonPerformance"
     },
     "associationName": {
       "value": "CommonWindowsLog_Association"
     },
     "vmAssociationList": {
-        "value": "VM01, VM02"
+        "value": "web03,web04"
     }
   }
 }

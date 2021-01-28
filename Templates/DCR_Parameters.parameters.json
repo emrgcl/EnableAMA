@@ -3,13 +3,13 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "dataCollectionRules": {
-            "value": "DCR_CommonWindowsLogs"
+            "value": "DCR_CommonPerformance"
         },
         "workspaceName": {
-            "value": "la-ArcServers"
+            "value": "Spark21ws1"
         },
         "location": {
-            "value": "West Europe"
+            "value": "esatus"
         }
     }
 }

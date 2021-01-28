@@ -5,13 +5,13 @@
         "dataCollectionRuleName": {
             "type": "string",
             "metadata": {
-                "description": "Name of the data collection rule."
+                "description": "DCR_CommonPeformance"
             }
         },
         "associationName": {
             "type": "string",
             "metadata": {
-                "description": "Name of the association."
+                "description": "DCR_CommonPeformance_assoc"
             }
         },
         "vmAssociationList": {
