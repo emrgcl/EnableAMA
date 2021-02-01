@@ -8,4 +8,6 @@
     WorkspaceName = 'Spark21ws'
 }
 
+# Xpath Filtering
 # System!*[System[EventID=7036 and Provider[@Name='Service Control Manager']] and EventData[Data[@Name='param1']='Print Spooler']]
+

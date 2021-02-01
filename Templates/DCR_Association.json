@@ -5,13 +5,13 @@
         "dataCollectionRuleName": {
             "type": "string",
             "metadata": {
-                "description": "DCR_CommonPeformance"
+                "description": "DCR_CommonWindowsPerfCounters"
             }
         },
         "associationName": {
             "type": "string",
             "metadata": {
-                "description": "DCR_CommonPeformance_assoc"
+                "description": "DCR_CommonWindowsPerfCounters_Association"
             }
         },
         "vmAssociationList": {
