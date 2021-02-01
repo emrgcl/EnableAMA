@@ -1,11 +1,11 @@
 @{
-    VMs = @('emreg-web01','emreg-web02')
-    ArcEnabledServers = @('web03','web04')
+    VMs = @('vm1','vm2')
+    ArcEnabledServers = @('arcenabled1','arcenabled1')
     ResourceGroupName = 'ContosoAll'
     Location = 'EastUs'
-    SubscriptionID = 'c02646f3-6401-40c7-8543-69333821da9a'
+    SubscriptionID = 'xxxxx-xxxx-xxx-xxx-xxxxx'
     DCRName = 'DCR_EventLogs_Filtered'
-    WorkspaceName = 'Spark21ws'
+    WorkspaceName = 'EventLogWorkspace'
 }
 
 # Xpath Filtering
