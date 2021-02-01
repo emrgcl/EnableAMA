@@ -7,3 +7,5 @@
     DCRName = 'DCR_EventLogs_Filtered'
     WorkspaceName = 'Spark21ws'
 }
+
+# System!*[System[EventID=7036 and Provider[@Name='Service Control Manager']] and EventData[Data[@Name='param1']='Print Spooler']]
