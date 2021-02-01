@@ -9,7 +9,7 @@
       "value": "DCR_CommonWindowsPerfCounters_Association"
     },
     "vmAssociationList": {
-        "value": "web03,web04,emreg-web01,emreg-web02"
+        "value": "web03,web04"
     }
   }
 }
