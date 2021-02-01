@@ -3,13 +3,13 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "dataCollectionRules": {
-            "value": "DCR_CommonPerformance"
+            "value": "DCR_CommonWindowsPerfCounters"
         },
         "workspaceName": {
-            "value": "Spark21ws1"
+            "value": "Spark21ws"
         },
         "location": {
-            "value": "esatus"
+            "value": "eastus"
         }
     }
 }
