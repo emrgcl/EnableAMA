@@ -24,23 +24,24 @@ Event Data collections supports Xpath Queries to filter the Event logs.
 - Powershell 7.0.4 (Version 7 for best practice)
 - VSCode Insiders
 
-# Demo Initialization
-Before starting the demonstartion make sure you have the modules in the requirements are installed and Imported.
+# Before Demonstration
 
-Run the following lines in your Powershell to Import the Parameters.PSD1 and set your variables.
+1. Make sure you have the modules in the requirements are installed and Imported.
+1. Edit Parameters.Psd1 to set your enviroment information (DCR name, Worksapce name, Resource Group, VMs etc.)  
+1. Run the following lines in your Powershell to Import the Parameters.PSD1 and set your variables.
 
-```PowerShell
-#Requires -Version 7.0
-#Requires -Modules @{ModuleName='Az';ModuleVersion='5.4.0'},@{ModuleName='Az.Accounts';ModuleVersion='2.2.4'},@{ModuleName='Az.ConnectedMachine';ModuleVersion='0.2.0'},@{ModuleName='Az.Monitor';ModuleVersion='2.4.0'}
-$ParametersFile = './Parameters.psd1'
-$Parameters=Import-PowerShellDataFile -Path $ParametersFile
-$VMs = $Parameters.VMs
-$ArcEnabledServers = $Parameters.ArcEnabledServers
-$ResourceGroupName = $Parameters.ResourceGroupName
-$SubscriptionID = $Parameters.SubscriptionID
-$DCRName = $Parameters.DCRName
-$Location = $Parameters.Location
-```
+    ```PowerShell
+    #Requires -Version 7.0
+    #Requires -Modules @{ModuleName='Az';ModuleVersion='5.4.0'},@{ModuleName='Az.Accounts';ModuleVersion='2.2.4'},@{ModuleName='Az.ConnectedMachine';ModuleVersion='0.2.0'},@{ModuleName='Az.Monitor';ModuleVersion='2.4.0'}
+    $ParametersFile = './Parameters.psd1'
+    $Parameters=Import-PowerShellDataFile -Path $ParametersFile
+    $VMs = $Parameters.VMs
+    $ArcEnabledServers = $Parameters.ArcEnabledServers
+    $ResourceGroupName = $Parameters.ResourceGroupName
+    $SubscriptionID = $Parameters.SubscriptionID
+    $DCRName = $Parameters.DCRName
+    $Location = $Parameters.Location
+    ```
 
 # Demo 1 - Create Data Collection on the portal and use various association options.
 
