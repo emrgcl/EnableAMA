@@ -42,11 +42,11 @@ $DCRName = $Parameters.DCRName
 $Location = $Parameters.Location
 ```
 
-# Demo 1 - Create Data Collection On the Portal and use various assoication options.
+# Demo 1 - Create Data Collection on the portal and use various association options.
 
 You might need to optimize consumption with inclusive or exclusive rules using xpath queries. This also helps if theres data that requires not to be inserterd due to compliance scenarios.
 
-PowerShell Cmdlets for each step below can be found in ***.\Demo-1.ps1***
+PowerShell Cmdlets for each step below can be found in ***.\Demo.ps1***
 
 1. Create a Data Collection Rule using the 
 value of the **$DCRName** variable in **Parameters.psd1** with an Event Log data source using custom and type the below Xpath Query assoicate with *VM1*
