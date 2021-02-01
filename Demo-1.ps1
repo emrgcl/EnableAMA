@@ -1,6 +1,5 @@
 #Requires -Version 7.0
-#Requires -Modules @{ModuleName='Az';ModuleVersion='5.4.0'},@{ModuleName='Az.ConnectedMachine';ModuleVersion='0.2.0'}
-
+#Requires -Modules @{ModuleName='Az';ModuleVersion='5.4.0'},@{ModuleName='Az.Accounts';ModuleVersion='2.2.4'},@{ModuleName='Az.ConnectedMachine';ModuleVersion='0.2.0'},@{ModuleName='Az.Monitor';ModuleVersion='2.4.0'}
 $ParametersFile = './Parameters.psd1'
 $Parameters=Import-PowerShellDataFile -Path $ParametersFile
 $VMs = $Parameters.VMs
@@ -13,12 +12,12 @@ $Location = $Parameters.Location
 # create a data collection rule Named in Variable $DCRName in the portal and associate with VM1
 
 # Get Extension List for the VMs and verify the extension is installed
-$VMs | ForEach-Object {Get-AzVMExtension -VMName $_ -ResourceGroupName $ResourceGroupName | Select-Object -Property VMName,Name,ProvisioningState}
+$VMs | ForEach-Object {Get-AzVMExtension -VMName $_ -ResourceGroupName $ResourceGroupName | Where-Object {$_.Name -eq 'AzureMonitorWindowsAgent'} | Select-Object -Property VMName,Name,ProvisioningState}
 
 # Check extensions in portal and add ArcEnabledServer1 to to assoication in the portal
 
 # Get Extension List for Arc Servers
-$ArcEnabledServers | ForEach-Object {$MachineName = $_ ;Get-AzConnectedMachineExtension -MachineName $_ -ResourceGroupName $ResourceGroupName -PipelineVariable $ExtensionInfo | Select-Object -Property @{Name='MachineName';Expression={$MachineName}},Name,ProvisioningState}
+$ArcEnabledServers | ForEach-Object {$MachineName = $_ ;Get-AzConnectedMachineExtension -MachineName $_ -ResourceGroupName $ResourceGroupName -PipelineVariable $ExtensionInfo | Where-Object {$_.Name -eq 'AzureMonitorWindowsAgent'} | Select-Object -Property @{Name='MachineName';Expression={$MachineName}},Name,ProvisioningState}
 
 # Time for a take 100 in Workspace in the portal
 

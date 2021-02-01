@@ -1,5 +1,5 @@
 #Requires -Version 7.0
-#Requires -Modules @{ModuleName='Az';ModuleVersion='5.4.0'},@{ModuleName='Az.ConnectedMachine';ModuleVersion='0.2.0'}
+#Requires -Modules @{ModuleName='Az';ModuleVersion='5.4.0'},@{ModuleName='Az.Accounts';ModuleVersion='2.2.4'},@{ModuleName='Az.ConnectedMachine';ModuleVersion='0.2.0'},@{ModuleName='Az.Monitor';ModuleVersion='2.4.0'}
 
 $ParametersFile = './Parameters.psd1'
 $Parameters=Import-PowerShellDataFile -Path $ParametersFile
@@ -12,7 +12,7 @@ $Location = $Parameters.Location
 
 
 # Get Data Collection Rule Objects
-$DCR = Get-AzDataCollectionRule -RuleName $DCRName -ResourceGroupName 'ContosoEu'
+$DCR = Get-AzDataCollectionRule -RuleName $DCRName -ResourceGroupName $ResourceGroupName
 
 # Remove Associations, Unfortunately pipeline isnt working properly with Inputobject
 $DCRAssociations = $DCR | Get-AzDataCollectionRuleAssociation
